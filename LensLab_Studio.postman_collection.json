@@ -1,8 +1,8 @@
 {
   "info": {
-    "_postman_id": "lenslab-studio-collection-g05",
+    "_postman_id": "lenslab-studio-pd-cseds2a-g05",
     "name": "LensLab Studio - Camera Rental API (PD-CSEDS2A-G05)",
-    "description": "Postman collection for LensLab Studio Camera Rental Management System",
+    "description": "Postman v2.1 collection for LensLab Studio camera rental backend",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -17,7 +17,7 @@
       "name": "Photographers",
       "item": [
         {
-          "name": "Get All Photographers",
+          "name": "GET All Photographers",
           "request": {
             "method": "GET",
             "header": [],
@@ -29,7 +29,7 @@
           }
         },
         {
-          "name": "Get Photographer by ID",
+          "name": "GET Photographer By ID",
           "request": {
             "method": "GET",
             "header": [],
@@ -41,7 +41,7 @@
           }
         },
         {
-          "name": "Create Photographer",
+          "name": "POST Photographer (Valid -> 201)",
           "request": {
             "method": "POST",
             "header": [
@@ -52,7 +52,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Sarah Jenkins\",\n  \"email\": \"sarah@lenslab.com\",\n  \"phone\": \"555-0103\"\n}"
+              "raw": "{\n  \"name\": \"Ananya Sharma\",\n  \"phone\": \"9876543210\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/photographers",
@@ -62,9 +62,9 @@
           }
         },
         {
-          "name": "Update Photographer",
+          "name": "POST Photographer (Missing Name -> 400)",
           "request": {
-            "method": "PUT",
+            "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
@@ -73,24 +73,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Sarah Jenkins-Smith\",\n  \"phone\": \"555-0199\"\n}"
+              "raw": "{\n  \"phone\": \"9876543210\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/photographers/1",
+              "raw": "{{baseUrl}}/photographers",
               "host": ["{{baseUrl}}"],
-              "path": ["photographers", "1"]
-            }
-          }
-        },
-        {
-          "name": "Delete Photographer",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/photographers/2",
-              "host": ["{{baseUrl}}"],
-              "path": ["photographers", "2"]
+              "path": ["photographers"]
             }
           }
         }
@@ -100,7 +88,7 @@
       "name": "Cameras",
       "item": [
         {
-          "name": "Get All Cameras",
+          "name": "GET All Cameras",
           "request": {
             "method": "GET",
             "header": [],
@@ -112,7 +100,7 @@
           }
         },
         {
-          "name": "Search Cameras by Kind",
+          "name": "GET Cameras Filtered by Kind (?kind=Mirrorless)",
           "request": {
             "method": "GET",
             "header": [],
@@ -130,25 +118,7 @@
           }
         },
         {
-          "name": "Search Cameras by Query",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/cameras?search=Nikon",
-              "host": ["{{baseUrl}}"],
-              "path": ["cameras"],
-              "query": [
-                {
-                  "key": "search",
-                  "value": "Nikon"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "Get Camera by ID",
+          "name": "GET Camera By ID",
           "request": {
             "method": "GET",
             "header": [],
@@ -160,7 +130,7 @@
           }
         },
         {
-          "name": "Test 1: Add Camera (DSLR -> 201)",
+          "name": "Test 1: POST Camera (DSLR -> 201)",
           "request": {
             "method": "POST",
             "header": [
@@ -171,7 +141,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Canon EOS 5D Mark IV\",\n  \"kind\": \"DSLR\"\n}"
+              "raw": "{\n  \"name\": \"Nikon D850\",\n  \"kind\": \"DSLR\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/cameras",
@@ -181,7 +151,7 @@
           }
         },
         {
-          "name": "Test 2: Add Camera Invalid Kind (Other -> 400)",
+          "name": "Test 2: POST Camera (Other -> 400 Allowed Values)",
           "request": {
             "method": "POST",
             "header": [
@@ -192,7 +162,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Polaroid Now\",\n  \"kind\": \"Other\"\n}"
+              "raw": "{\n  \"name\": \"Vintage Toycam\",\n  \"kind\": \"Other\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/cameras",
@@ -202,7 +172,7 @@
           }
         },
         {
-          "name": "Test 3: Update Camera (Mirrorless -> 200)",
+          "name": "Test 3: PUT Camera (Update to Mirrorless -> 200)",
           "request": {
             "method": "PUT",
             "header": [
@@ -223,14 +193,14 @@
           }
         },
         {
-          "name": "Delete Camera",
+          "name": "DELETE Camera By ID",
           "request": {
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/cameras/2",
+              "raw": "{{baseUrl}}/cameras/1",
               "host": ["{{baseUrl}}"],
-              "path": ["cameras", "2"]
+              "path": ["cameras", "1"]
             }
           }
         }
@@ -240,7 +210,7 @@
       "name": "Rentals",
       "item": [
         {
-          "name": "Get All Rentals",
+          "name": "GET Rentals (SQL Join with Photographer & Camera Names)",
           "request": {
             "method": "GET",
             "header": [],
@@ -252,31 +222,7 @@
           }
         },
         {
-          "name": "Join Endpoint: Rentals with Photographer & Camera Details",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/rentals/details",
-              "host": ["{{baseUrl}}"],
-              "path": ["rentals", "details"]
-            }
-          }
-        },
-        {
-          "name": "Get Rental by ID",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/rentals/1",
-              "host": ["{{baseUrl}}"],
-              "path": ["rentals", "1"]
-            }
-          }
-        },
-        {
-          "name": "Create Rental",
+          "name": "POST Rental (Valid -> 201)",
           "request": {
             "method": "POST",
             "header": [
@@ -287,7 +233,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"photographer_id\": 1,\n  \"camera_id\": 2,\n  \"rental_date\": \"2026-11-28\"\n}"
+              "raw": "{\n  \"photographer_id\": 1,\n  \"camera_id\": 2,\n  \"rental_date\": \"2026-11-20\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/rentals",
@@ -297,7 +243,7 @@
           }
         },
         {
-          "name": "Double Booking Conflict Check (Same Camera, Same Date -> 409)",
+          "name": "POST Rental Double-Booking Conflict (Same Camera, Same Date -> 409)",
           "request": {
             "method": "POST",
             "header": [
@@ -308,7 +254,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"photographer_id\": 2,\n  \"camera_id\": 2,\n  \"rental_date\": \"2026-11-28\"\n}"
+              "raw": "{\n  \"photographer_id\": 2,\n  \"camera_id\": 2,\n  \"rental_date\": \"2026-11-20\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/rentals",
@@ -318,14 +264,44 @@
           }
         },
         {
-          "name": "Delete Rental",
+          "name": "POST Rental Missing Photographer (404)",
           "request": {
-            "method": "DELETE",
-            "header": [],
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"photographer_id\": 9999,\n  \"camera_id\": 2,\n  \"rental_date\": \"2026-11-22\"\n}"
+            },
             "url": {
-              "raw": "{{baseUrl}}/rentals/1",
+              "raw": "{{baseUrl}}/rentals",
               "host": ["{{baseUrl}}"],
-              "path": ["rentals", "1"]
+              "path": ["rentals"]
+            }
+          }
+        },
+        {
+          "name": "POST Rental Missing Camera (404)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"photographer_id\": 1,\n  \"camera_id\": 9999,\n  \"rental_date\": \"2026-11-22\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/rentals",
+              "host": ["{{baseUrl}}"],
+              "path": ["rentals"]
             }
           }
         }

@@ -1,14 +1,19 @@
 {
   "name": "lenslab-studio",
   "version": "1.0.0",
-  "description": "Camera rental management system for LensLab Studio",
-  "main": "server.js",
+  "description": "LensLab Studio Camera Rental Management System (PD-CSEDS2A-G05)",
+  "main": "app.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "node test.js"
   },
   "dependencies": {
     "express": "^4.21.2",
+    "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
   }
 }
